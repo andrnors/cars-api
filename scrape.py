@@ -139,6 +139,3 @@ def scrapeNormalCar(regnr):
     }
     jsonarray = json.dumps(car_object, indent=4)
     return jsonarray
-
-if __name__ == "__main__":
-    app.run(debug=True)
