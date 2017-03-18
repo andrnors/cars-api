@@ -4,6 +4,10 @@ import re
 from bs4 import BeautifulSoup
 import json
 
+from flask import Flask
+
+app = Flask(__name__)
+
 
 def find(source, first, last):
     try:
@@ -13,6 +17,17 @@ def find(source, first, last):
     except ValueError:
         return ""
 
+@app.route('/')
+def index():
+    return """
+        Car information api containing following endpoints:
+        \n\n
+        /scrapeAllSivil/\n
+        /scrapeSingleSivil/<regnr>/\n
+        /scrapeNormalCar/<regnr>/\n
+    """
+
+@app.route('/scrapeAllSivil/')
 def scrapeAllSivil():
     req = Request('https://regnr.info/sivilpoliti', headers={'User-Agent': 'Mozilla/5.0'})
     webpage = urlopen(req).read()
@@ -33,11 +48,13 @@ def scrapeAllSivil():
         data = {'regnr':regnr, 'merke_model':merke_model, 'bilde':bilde}
         alle_biler.append(data)
 
-    with open('sivil.json', 'w') as outfile:
-        json.dump(alle_biler, outfile, indent=4)
+    # with open('sivil.json', 'w') as outfile:
+    #     json.dump(alle_biler, outfile, indent=4)
+    # jsonarray = json.dumps(car_object, indent=4)
 
+    return json.dumps(alle_biler, indent=4)
 
-
+@app.route('/scrapeSingleSivil/<regnr>')
 def scrapeSingleSivil(regnr):
     req = Request('https://regnr.info/' + regnr, headers={'User-Agent': 'Mozilla/5.0'})
     webpage = urlopen(req).read()
@@ -82,7 +99,7 @@ def scrapeSingleSivil(regnr):
 
 # scrapeSingleSivil("BP99615")
 
-
+@app.route('/scrapeNormalCar/<regnr>')
 def scrapeNormalCar(regnr):
     req = Request('https://regnr.info/' + regnr, headers={'User-Agent': 'Mozilla/5.0'})
     webpage = urlopen(req).read()
@@ -120,9 +137,8 @@ def scrapeNormalCar(regnr):
         "motorytelse":motorytelse,
         "aksler_med_drift":aksler_med_drift
     }
-    print(car_object)
     jsonarray = json.dumps(car_object, indent=4)
     return jsonarray
 
-
-scrapeNormalCar("AU6724")
+if __name__ == "__main__":
+    app.run(debug=True)
