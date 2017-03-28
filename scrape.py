@@ -48,7 +48,6 @@ def scrapeAllSivil():
         alle_biler.append(data)
 
     return json.dumps(alle_biler, indent=4)
-print(scrapeAllSivil())
 
 @app.route('/scrapeSingleSivil/<regnr>')
 def scrapeSingleSivil(regnr):
@@ -83,7 +82,6 @@ def scrapeSingleSivil(regnr):
     # Mål og vekt
     maal_vekt = {}
     for t in motor_info[0]:
-        print(t)
         maal_vekt[find(str(t), '<tr>\n<td>', '</td>').replace(" ", "_").lower()] = find(str(t), '</td>\n<td>', '</td>')
     del maal_vekt[""]
 
@@ -118,6 +116,7 @@ def scrapeSingleSivil(regnr):
                     "dekk_felg": dekk_felg,
                     "eu_kontroll": eu
                 }
+
     jsonarray = json.dumps(car_object, indent=4, ensure_ascii=False)
     return jsonarray
 # scrapeSingleSivil("BP99615")
@@ -190,3 +189,5 @@ def scrapeNormalCar(regnr):
 
     jsonarray = json.dumps(car_object, indent=4, ensure_ascii=False)
     return jsonarray
+scrapeNormalCar("ax72375")
+scrapeSingleSivil("BP99615")
