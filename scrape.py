@@ -53,6 +53,7 @@ def scrapeAllSivil():
     # jsonarray = json.dumps(car_object, indent=4)
 
     return json.dumps(alle_biler, indent=4)
+print(scrapeAllSivil())
 
 @app.route('/scrapeSingleSivil/<regnr>')
 def scrapeSingleSivil(regnr):
@@ -111,7 +112,6 @@ def scrapeNormalCar(regnr):
         stolen = find(str(stolen), "<h1>", "\n").strip()
     else:
         stolen = ""
-
     # kommentarer = soup.find_all("span", class_="inline-kommentar-dato")
     kjoretoy_info = str(soup.find_all("div", class_="kjoretoy-data"))
     kategori = find(kjoretoy_info, "<b>", "</b><br/>").strip()
@@ -119,9 +119,34 @@ def scrapeNormalCar(regnr):
     info_normal_eier = find(kjoretoy_info, '<div class="kjoretoy-data">\n<span>','</span></div>').strip()
     serienummer = find(str(soup.find_all("li")), '<a href="/artikler/serienummer">Serienummeret</a> er','.</li>').strip()
 
-    # motor
     motor_info = soup.find_all("table", class_="noheader")
-    # print(motor_info[1])
+
+    #kilometerhistorikk/eu-kontroll
+    kilometerhistorikk = str(soup.find(id="kilometerhistorikk"))
+    kmsoup = BeautifulSoup(kilometerhistorikk, 'html.parser')
+    km = kmsoup.find_all("tr")
+
+    eu_kontroll = {}
+    for item in km:
+        eu_kontroll[find(str(item), '<td style="color:;">', '</td>')] = find(str(item), '<td title="', '">')
+    del eu_kontroll[""]
+    eu = []
+    for key,value in eu_kontroll.items():
+        eu.append([value, key])
+
+    # Mål og vekt
+    maal_vekt = {}
+    for t in motor_info[0]:
+        maal_vekt[find(str(t), '<tr>\n<td>', '</td>').replace(" ", "_").lower()] = find(str(t), '</td>\n<td>', '</td>')
+    del maal_vekt[""]
+
+    # dekk felg
+    dekk_felg={}
+    for t in motor_info[2]:
+        dekk_felg[find(str(t), '<tr>\n<td>', '</td>').replace(" ", "_").lower()] = find(str(t), '</td>\n<td>', '</td>')
+    del dekk_felg[""]
+
+    # motor
     motor_info = str(motor_info[1])
     slagvolum = find(motor_info, "</sup><br/>", '</td>').strip()
     motorytelse = find(motor_info, '<td>Motorytelse</td>\n<td>','<br/>').strip()
@@ -135,7 +160,11 @@ def scrapeNormalCar(regnr):
         "serienummer": serienummer,
         "slagvolum": slagvolum,
         "motorytelse":motorytelse,
-        "aksler_med_drift":aksler_med_drift
+        "aksler_med_drift":aksler_med_drift,
+        "maal_vekt": maal_vekt,
+        "dekk_felg": dekk_felg,
+        "eu_kontroll": eu
     }
+
     jsonarray = json.dumps(car_object, indent=4)
     return jsonarray
