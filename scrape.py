@@ -21,10 +21,9 @@ def find(source, first, last):
 def index():
     return """
         Car information api containing following endpoints:
-        \n\n
-        /scrapeAllSivil/\n
-        /scrapeSingleSivil/<regnr>/\n
-        /scrapeNormalCar/<regnr>/\n
+        /scrapeAllSivil/
+        /scrapeSingleSivil/regnr/
+        /scrapeNormalCar/regnr/
     """
 
 @app.route('/scrapeAllSivil/')
@@ -48,10 +47,6 @@ def scrapeAllSivil():
         data = {'regnr':regnr, 'merke_model':merke_model, 'bilde':bilde}
         alle_biler.append(data)
 
-    # with open('sivil.json', 'w') as outfile:
-    #     json.dump(alle_biler, outfile, indent=4)
-    # jsonarray = json.dumps(car_object, indent=4)
-
     return json.dumps(alle_biler, indent=4)
 print(scrapeAllSivil())
 
@@ -71,12 +66,37 @@ def scrapeSingleSivil(regnr):
 
     # motor
     motor_info = soup.find_all("table", class_="noheader")
-    # print(motor_info[1])
+
+    #kilometerhistorikk/eu-kontroll
+    kilometerhistorikk = str(soup.find(id="kilometerhistorikk"))
+    kmsoup = BeautifulSoup(kilometerhistorikk, 'html.parser')
+    km = kmsoup.find_all("tr")
+
+    eu_kontroll = {}
+    for item in km:
+        eu_kontroll[find(str(item), '<td style="color:;">', '</td>')] = find(str(item), '<td title="', '">')
+    del eu_kontroll[""]
+    eu = []
+    for key,value in eu_kontroll.items():
+        eu.append([value, key])
+
+    # Mål og vekt
+    maal_vekt = {}
+    for t in motor_info[0]:
+        print(t)
+        maal_vekt[find(str(t), '<tr>\n<td>', '</td>').replace(" ", "_").lower()] = find(str(t), '</td>\n<td>', '</td>')
+    del maal_vekt[""]
+
+    # dekk felg
+    dekk_felg={}
+    for t in motor_info[2]:
+        dekk_felg[find(str(t), '<tr>\n<td>', '</td>').replace(" ", "_").lower()] = find(str(t), '</td>\n<td>', '</td>')
+    del dekk_felg[""]
+
     motor_info = str(motor_info[1])
     slagvolum = find(motor_info, "</sup><br/>", '</td>').strip()
     motorytelse = find(motor_info, '<td>Motorytelse</td>\n<td>','<br/>').strip()
     aksler_med_drift = find(motor_info, '<td>Aksler med drift</td>\n<td>','</td>').strip()
-
 
     kommentarer = soup.find_all("td")
     alle_kommentarer = []
@@ -93,11 +113,13 @@ def scrapeSingleSivil(regnr):
                     "motorytelse":motorytelse,
                     "aksler_med_drift":aksler_med_drift,
                     "serienummer": serienummer,
-                    "kommentarer":alle_kommentarer
+                    "kommentarer":alle_kommentarer,
+                    "maal_vekt": maal_vekt,
+                    "dekk_felg": dekk_felg,
+                    "eu_kontroll": eu
                 }
-    jsonarray = json.dumps(car_object, indent=4)
+    jsonarray = json.dumps(car_object, indent=4, ensure_ascii=False)
     return jsonarray
-
 # scrapeSingleSivil("BP99615")
 
 @app.route('/scrapeNormalCar/<regnr>')
@@ -166,5 +188,5 @@ def scrapeNormalCar(regnr):
         "eu_kontroll": eu
     }
 
-    jsonarray = json.dumps(car_object, indent=4)
+    jsonarray = json.dumps(car_object, indent=4, ensure_ascii=False)
     return jsonarray
