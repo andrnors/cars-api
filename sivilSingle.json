@@ -6,9 +6,53 @@
     "slagvolum": "4.4 liter",
     "motorytelse": "320 HK",
     "aksler_med_drift": "2 av 2",
+    "serienummer": "WBAFB51000LU52414",
     "kommentarer": [
         "Sett i Hedmark fylke i mai 2016. SETT P\u00c5 TANGEN",
         "Sett i Oslo fylke i mai 2016. Jeg s\u00e5 den ligge bredsladd rett utfor slottet!",
         "Det er bilen til PST, Den kongelige politieskorte!"
+    ],
+    "maal_vekt": {
+        "lengde": "467 cm",
+        "bredde": "187 cm",
+        "egenvekt": "2440 kg",
+        "egenvekt_m/f\u00f8rer": "2515 kg",
+        "tillatt_totalvekt": "2810 kg",
+        "maks_nyttelast": "295 kg",
+        "maksvekt_tilhenger_m/brems": " ",
+        "maksvekt_tilhenger_u/brems": " ",
+        "maksvekt_p\u00e5_tilhengerkobling": " ",
+        "maks_vogntogvekt": " ",
+        "maks_taklast": " ",
+        "maks_aksellast_foran": "1305 kg",
+        "maks_aksellast_bak": "1530 kg"
+    },
+    "dekk_felg": {
+        "standard_dekk_foran": "255/55R18 ",
+        "standard_dekk_bak": "255/55R18 ",
+        "hastighetsindeks_foran": "H (210 km/t) ",
+        "hastighetsindeks_bak": "H (210 km/t) ",
+        "lasteindeks_foran": "105 ",
+        "lasteindeks_bak": "105 ",
+        "innpress_foran": "Ikke oppgitt",
+        "innpress_bak": "Ikke oppgitt"
+    },
+    "eu_kontroll": [
+        [
+            "25.04.2014",
+            "211.150"
+        ],
+        [
+            "16.03.2012",
+            "182.666"
+        ],
+        [
+            "15.01.2010",
+            "135.582"
+        ],
+        [
+            "10.06.2008",
+            "90.527"
+        ]
     ]
 }

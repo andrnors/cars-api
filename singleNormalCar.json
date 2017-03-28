@@ -1,0 +1,69 @@
+{
+    "stolen": "",
+    "kategori": "Varebil",
+    "type_bil": "Volkswagen Caravelle Tdi",
+    "info_normal_eier": "S\u00f8lvfarget varebil registrert i 1999. Fikk ny eier i juni 2015, og er n\u00e5 hjemmeh\u00f8rende i Kongsberg-omr\u00e5det.",
+    "serienummer": "WV2ZZZ70ZXH114449",
+    "slagvolum": "2.5 liter",
+    "motorytelse": "102 HK",
+    "aksler_med_drift": "1 av 2",
+    "maal_vekt": {
+        "lengde": "479 cm",
+        "bredde": "184 cm",
+        "egenvekt": "1810 kg",
+        "egenvekt_m/f\u00f8rer": "1885 kg",
+        "tillatt_totalvekt": "2700 kg",
+        "maks_nyttelast": "815 kg",
+        "maksvekt_tilhenger_m/brems": "2000 kg",
+        "maksvekt_tilhenger_u/brems": "700 kg",
+        "maksvekt_p\u00e5_tilhengerkobling": "100 kg",
+        "maks_vogntogvekt": "4500 kg",
+        "maks_taklast": "100 kg",
+        "maks_aksellast_foran": "1510 kg",
+        "maks_aksellast_bak": "1330 kg"
+    },
+    "dekk_felg": {
+        "standard_dekk_foran": "205/65 R 15 ",
+        "standard_dekk_bak": "205/65 R 15 ",
+        "hastighetsindeks_foran": "Q (160 km/t) ",
+        "hastighetsindeks_bak": "Q (160 km/t) ",
+        "lasteindeks_foran": "99 ",
+        "lasteindeks_bak": "99 ",
+        "innpress_foran": "46 mm",
+        "innpress_bak": "46 mm"
+    },
+    "eu_kontroll": [
+        [
+            "05.08.2015",
+            "289.650"
+        ],
+        [
+            "18.06.2015",
+            "289.605"
+        ],
+        [
+            "27.05.2013",
+            "271.905"
+        ],
+        [
+            "07.07.2011",
+            "247.300"
+        ],
+        [
+            "12.01.2009",
+            "197.079"
+        ],
+        [
+            "30.04.2007",
+            "158.222"
+        ],
+        [
+            "25.05.2005",
+            "132.492"
+        ],
+        [
+            "19.05.2003",
+            "92.710"
+        ]
+    ]
+}
