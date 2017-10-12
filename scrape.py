@@ -21,12 +21,12 @@ def find(source, first, last):
 def index():
     return """
         Car information api containing following endpoints:
-        /scrapeAllSivil/
-        /scrapeSingleSivil/regnr/
-        /scrapeNormalCar/regnr/
+        /all_police/
+        /single_police/regnr/
+        /normal/regnr/
     """
 
-@app.route('/scrapeAllSivil/')
+@app.route('/all_police/')
 def scrapeAllSivil():
     req = Request('https://regnr.info/sivilpoliti', headers={'User-Agent': 'Mozilla/5.0'})
     webpage = urlopen(req).read()
@@ -49,7 +49,7 @@ def scrapeAllSivil():
 
     return json.dumps(alle_biler, indent=4)
 
-@app.route('/scrapeSingleSivil/<regnr>')
+@app.route('/single_police/<regnr>')
 def scrapeSingleSivil(regnr):
     req = Request('https://regnr.info/' + regnr, headers={'User-Agent': 'Mozilla/5.0'})
     webpage = urlopen(req).read()
@@ -121,7 +121,7 @@ def scrapeSingleSivil(regnr):
     return jsonarray
 # scrapeSingleSivil("BP99615")
 
-@app.route('/scrapeNormalCar/<regnr>')
+@app.route('/normal/<regnr>')
 def scrapeNormalCar(regnr):
     req = Request('https://regnr.info/' + regnr, headers={'User-Agent': 'Mozilla/5.0'})
     webpage = urlopen(req).read()
@@ -174,6 +174,7 @@ def scrapeNormalCar(regnr):
     aksler_med_drift = find(motor_info, '<td>Aksler med drift</td>\n<td>','</td>').strip()
 
     car_object = {
+        "regnr": regnr,
         "stolen": stolen,
         "kategori": kategori,
         "type_bil": type_bil,
