@@ -151,7 +151,8 @@ def scrapeNormalCar(regnr):
     eu_kontroll = {}
     for item in km:
         eu_kontroll[find(str(item), '<td style="color:;">', '</td>')] = find(str(item), '<td title="', '">')
-    del eu_kontroll[""]
+    if "" in eu_kontroll:
+        del eu_kontroll[""]
     eu = []
     for key,value in eu_kontroll.items():
         eu.append([value, key])
