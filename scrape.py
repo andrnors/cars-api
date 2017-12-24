@@ -26,28 +26,29 @@ def index():
         /normal/regnr/
     """
 
-@app.route('/all_police/')
-def scrapeAllSivil():
-    req = Request('https://regnr.info/sivilpoliti', headers={'User-Agent': 'Mozilla/5.0'})
-    webpage = urlopen(req).read()
-    soup = BeautifulSoup(webpage, 'html.parser')
-    cars = soup.find_all("div", class_="bilboks-container")
+# @app.route('/all_police/')
+# def scrapeAllSivil():
+#     req = Request('https://regnr.info/sivilpoliti', headers={'User-Agent': 'Mozilla/5.0'})
+#     webpage = urlopen(req).read()
+#     soup = BeautifulSoup(webpage, 'html.parser')
+#     cars = soup.find_all("div", class_="bilboks-container")
 
-    car_soup = BeautifulSoup(str(cars), 'html.parser')
+#     car_soup = BeautifulSoup(str(cars), 'html.parser')
 
-    alle_registreringsnummer = car_soup.find_all("b")
-    alle_merker = car_soup.find_all("div", class_="bilboks-merkemodell")
-    alle_bilder = car_soup.find_all("div", class_="bilboks-bilde")
+#     alle_registreringsnummer = car_soup.find_all("b")
+#     alle_merker = car_soup.find_all("div", class_="bilboks-merkemodell")
+#     alle_bilder = car_soup.find_all("div", class_="bilboks-bilde")
 
-    alle_biler = []
-    for i in range(len(alle_registreringsnummer)):
-        regnr = alle_registreringsnummer[i].string
-        merke_model = alle_merker[i].string.strip()
-        bilde = str(alle_bilder[i])[37:-9]
-        data = {'regnr':regnr, 'merke_model':merke_model, 'bilde':bilde}
-        alle_biler.append(data)
+#     alle_biler = []
+#     for i in range(len(alle_registreringsnummer)):
+#         regnr = alle_registreringsnummer[i].string
+#         merke_model = alle_merker[i].string.strip()
+#         bilde = str(alle_bilder[i])[37:-9]
+#         data = {'regnr':regnr, 'merke_model':merke_model, 'bilde':bilde}
+#         alle_biler.append(data)
 
-    return json.dumps(alle_biler, indent=4)
+#     return json.dumps(alle_biler, indent=4)
+
 
 @app.route('/single_police/<regnr>')
 def scrapeSingleSivil(regnr):
