@@ -208,5 +208,3 @@ def scrapeNormalCar(regnr):
 
     jsonarray = json.dumps(car_object, indent=4, ensure_ascii=False)
     return jsonarray
-scrapeNormalCar("ax72375")
-scrapeSingleSivil("BP99615")
