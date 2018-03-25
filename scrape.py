@@ -3,6 +3,8 @@ from urllib.request import Request, urlopen
 import re
 from bs4 import BeautifulSoup
 import json
+import requests, bs4
+
 
 from flask import Flask
 
@@ -21,10 +23,26 @@ def find(source, first, last):
 def index():
     return """
         Car information api containing following endpoints:
-        /all_police/
         /single_police/regnr/
         /normal/regnr/
+        /car/regnr/
     """
+
+@app.route('/car/<regnr>')
+def car_information(regnr):        
+    r = requests.get('https://www.vegvesen.no/kjoretoy/kjop+og+salg/kj%C3%B8ret%C3%B8yopplysninger?registreringsnummer='+regnr)
+    soup = bs4.BeautifulSoup(r.text, 'lxml')
+    contents = soup.find(class_='text')
+    car_object = {}
+    for table in contents.find_all(class_='definisjonsliste'):
+        titles = table.find_all("dt")
+        data = table.find_all("dd")
+        for item in range(len(data)):
+            car_object[titles[item].text.strip().replace(" ", "_").lower()] = data[item].text.strip()
+    return json.dumps(car_object, indent=4, ensure_ascii=False)
+
+print(car_information("BS55340"))
+
 
 # @app.route('/all_police/')
 # def scrapeAllSivil():
