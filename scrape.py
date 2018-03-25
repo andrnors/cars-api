@@ -41,8 +41,6 @@ def car_information(regnr):
             car_object[titles[item].text.strip().replace(" ", "_").lower()] = data[item].text.strip()
     return json.dumps(car_object, indent=4, ensure_ascii=False)
 
-print(car_information("BS55340"))
-
 
 # @app.route('/all_police/')
 # def scrapeAllSivil():

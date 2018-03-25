@@ -13,5 +13,3 @@ def car_information(regnr):
         for item in range(len(data)):
             car_object[titles[item].text.strip().replace(" ", "_").lower()] = data[item].text.strip()
     return json.dumps(car_object, indent=4, ensure_ascii=False)
-
-print(car_information("BS55340"))
