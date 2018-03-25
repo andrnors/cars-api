@@ -30,7 +30,7 @@ def index():
 
 @app.route('/car/<regnr>')
 def car_information(regnr):        
-    r = requests.get('https://www.vegvesen.no/kjoretoy/kjop+og+salg/kj%C3%B8ret%C3%B8yopplysninger?registreringsnummer='+regnr)
+    r = requests.get('https://www.vegvesen.no/kjoretoy/kjop+og+salg/kj%C3%B8ret%C3%B8yopplysninger?registreringsnummer='+regnr.upper())
     soup = bs4.BeautifulSoup(r.text, 'lxml')
     contents = soup.find(class_='text')
     car_object = {}
