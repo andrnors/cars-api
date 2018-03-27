@@ -13,3 +13,4 @@ requests==2.18.4
 requirements-detector==0.5.2
 sorl-thumbnail==12.4.1
 urllib3==1.22
+Flask_Cors==3.0.3
