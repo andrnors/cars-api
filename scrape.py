@@ -4,11 +4,11 @@ import re
 from bs4 import BeautifulSoup
 import json
 import requests, bs4
-
+from flask_cors import CORS, cross_origin
 from flask import Flask
 
 app = Flask(__name__)
-
+CORS(app)
 
 def find(source, first, last):
     try:
