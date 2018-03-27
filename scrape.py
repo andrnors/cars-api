@@ -40,7 +40,6 @@ def car_information(regnr):
             car_object[titles[item].text.strip().replace(" ", "_").lower()] = data[item].text.strip()
     
     response = json.dumps(car_object, indent=4, ensure_ascii=False)
-    response.headers.add('Access-Control-Allow-Origin', '*')
     return response
     
     # return json.dumps(car_object, indent=4, ensure_ascii=False)
