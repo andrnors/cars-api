@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 import json
 import requests, bs4
 
-
 from flask import Flask
 
 app = Flask(__name__)
@@ -28,7 +27,7 @@ def index():
         /car/regnr/
     """
 
-@app.route('/car/<regnr>')
+@app.route('/car/<regnr>', methods=['GET'])
 def car_information(regnr):        
     r = requests.get('https://www.vegvesen.no/kjoretoy/kjop+og+salg/kj%C3%B8ret%C3%B8yopplysninger?registreringsnummer='+regnr.upper())
     soup = bs4.BeautifulSoup(r.text, 'lxml')
@@ -39,7 +38,12 @@ def car_information(regnr):
         data = table.find_all("dd")
         for item in range(len(data)):
             car_object[titles[item].text.strip().replace(" ", "_").lower()] = data[item].text.strip()
-    return json.dumps(car_object, indent=4, ensure_ascii=False)
+    
+    response = json.dumps(car_object, indent=4, ensure_ascii=False)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+    
+    # return json.dumps(car_object, indent=4, ensure_ascii=False)
 
 
 # @app.route('/all_police/')
