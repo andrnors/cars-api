@@ -37,8 +37,7 @@ def car_information(regnr):
         titles = table.find_all("dt")
         data = table.find_all("dd")
         for item in range(len(data)):
-            car_object[titles[item].text.strip().replace(" ", "_").lower()] = data[item].text.strip()
-    
+            car_object[titles[item].text.strip().replace(" ", "_").replace("-","_").replace("å","a").replace("ø","o").replace(".","_").replace("/","_").lower()] = data[item].text.strip()            
     response = json.dumps(car_object, indent=4, ensure_ascii=False)
     return response
     
